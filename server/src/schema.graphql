@@ -4,9 +4,9 @@ type Query {
 }
 
 type Mutation {
-  post(title: String!, description: String!): Note!
-  update(id: Int!, title: String!, description: String!): Note!
-  delete(id: Int!): Note!
+  postNote(title: String!, description: String!): Note!
+  updateNote(id: Int!, title: String, description: String): Note!
+  deleteNote(id: Int!): Note!
 }
 
 type Note {
