@@ -7,10 +7,25 @@ type Mutation {
   postNote(title: String!, description: String!): Note!
   updateNote(id: Int!, title: String, description: String): Note!
   deleteNote(id: Int!): Note!
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 }
 
 type Note {
   id: ID!
   title: String!
   description: String!
+  postedBy: User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  notes: [Note!]!
 }
