@@ -29,3 +29,7 @@ type User {
   email: String!
   notes: [Note!]!
 }
+
+type Subscription {
+  newNote: Note
+}

@@ -4,13 +4,17 @@ const { APP_SECRET, getUserId } = require("../utils");
 
 async function postNote(parent, args, context, info) {
   const userId = getUserId(context);
-  return context.prisma.note.create({
+
+  const newNote = context.prisma.note.create({
     data: {
       title: args.title,
       description: args.description,
       postedBy: { connect: { id: userId } },
     },
   });
+
+  context.pubsub.publish("NEW_NOTE", newNote);
+  return newNote;
 }
 
 async function updateNote(parent, args, context, info) {
