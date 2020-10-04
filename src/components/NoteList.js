@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Flex, Container, Button } from "theme-ui";
 import CreateNote from "./CreateNote";
+import { AUTH_TOKEN } from "../constants";
 
 const NOTELIST_QUERY = gql`
   {
@@ -23,6 +24,7 @@ function NoteList(props) {
           variant="primary"
           onClick={() => {
             props.handleViewChange("login");
+            localStorage.setItem(AUTH_TOKEN, null);
           }}
         >
           Sign Out

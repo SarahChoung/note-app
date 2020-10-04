@@ -43,7 +43,6 @@ export default function Login(props) {
   const _saveUserData = (token, id) => {
     localStorage.setItem(AUTH_TOKEN, token);
     localStorage.setItem(USER_ID, id);
-    console.log(localStorage);
   };
 
   return (

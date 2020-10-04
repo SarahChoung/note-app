@@ -1,10 +1,23 @@
 import React, { useState } from "react";
 import { Button, Label, Input, Box } from "theme-ui";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+
+const POST_MUTATION = gql`
+  mutation PostMutation($description: String!, $title: String!) {
+    postNote(description: $description, title: $title) {
+      id
+      title
+      description
+    }
+  }
+`;
 
 export default function CreateNote(props) {
   const [isCreating, setIsCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  console.log(title, description);
   return (
     <div>
       <Button onClick={() => setIsCreating(!isCreating)}>
@@ -31,7 +44,14 @@ export default function CreateNote(props) {
               placeholder="Note Description"
               mb={3}
             />
-            <Button>Submit New Note</Button>
+            <Mutation
+              mutation={POST_MUTATION}
+              variables={{ title, description }}
+            >
+              {(postMutation) => (
+                <Button onClick={postMutation}>Submit New Note</Button>
+              )}
+            </Mutation>
           </div>
         )}
       </Box>
