@@ -8,7 +8,7 @@ export default {
     text: "#000",
     background: "#fff",
     primary: "#33e",
-    secondary: "#30c",
+    secondary: "green",
     noteBackground: "lightyellow",
   },
   buttons: {
@@ -24,7 +24,7 @@ export default {
       color: "background",
       bg: "secondary",
       "&:hover": {
-        bg: "primary",
+        bg: "text",
         cursor: " pointer",
       },
     },

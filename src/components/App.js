@@ -4,8 +4,11 @@ import NoteList from "./NoteList";
 import Login from "./Login";
 import theme from "../theme";
 import { ThemeProvider } from "theme-ui";
+import { AUTH_TOKEN } from "../constants";
 
 function App() {
+  const authToken = localStorage.getItem(AUTH_TOKEN);
+
   const [view, setView] = useState("login");
 
   function handleViewChange(newView) {
@@ -15,7 +18,7 @@ function App() {
   let viewState;
   if (view === "login") {
     viewState = <Login handleViewChange={handleViewChange} />;
-  } else if (view === "notes") {
+  } else if (authToken && view === "notes") {
     viewState = <NoteList handleViewChange={handleViewChange} />;
   }
 
