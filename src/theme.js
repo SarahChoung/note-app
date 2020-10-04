@@ -9,7 +9,7 @@ export default {
     background: "#fff",
     primary: "#33e",
     secondary: "green",
-    noteBackground: "lightyellow",
+    noteBackground: "#ECECEC",
   },
   buttons: {
     primary: {
@@ -23,6 +23,14 @@ export default {
     secondary: {
       color: "background",
       bg: "secondary",
+      "&:hover": {
+        bg: "text",
+        cursor: " pointer",
+      },
+    },
+    danger: {
+      color: "background",
+      bg: "red",
       "&:hover": {
         bg: "text",
         cursor: " pointer",

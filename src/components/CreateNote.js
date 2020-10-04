@@ -17,7 +17,7 @@ export default function CreateNote(props) {
   const [isCreating, setIsCreating] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  console.log(title, description);
+
   return (
     <div>
       <Button onClick={() => setIsCreating(!isCreating)}>

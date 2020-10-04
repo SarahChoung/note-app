@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx, Button, Label, Input, Box } from "theme-ui";
 import { useState } from "react";
-import { AUTH_TOKEN, USER_ID } from "../constants";
+import { AUTH_TOKEN, USER_NAME } from "../constants";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -11,6 +11,7 @@ const SIGNUP_MUTATION = gql`
       token
       user {
         id
+        name
       }
     }
   }
@@ -22,6 +23,7 @@ const LOGIN_MUTATION = gql`
       token
       user {
         id
+        name
       }
     }
   }
@@ -35,14 +37,14 @@ export default function Login(props) {
 
   const _confirm = async (data) => {
     const { token } = login ? data.login : data.signup;
-    const { id } = login ? data.login.user : data.signup.user;
-    _saveUserData(token, id);
+    const { name } = login ? data.login.user : data.signup.user;
+    _saveUserData(token, name);
     props.handleViewChange("notes");
   };
 
-  const _saveUserData = (token, id) => {
+  const _saveUserData = (token, name) => {
     localStorage.setItem(AUTH_TOKEN, token);
-    localStorage.setItem(USER_ID, id);
+    localStorage.setItem(USER_NAME, name);
   };
 
   return (

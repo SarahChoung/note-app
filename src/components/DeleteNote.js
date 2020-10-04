@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Button, Label, Input, Box } from "theme-ui";
+/** @jsx jsx */
+import { jsx } from "theme-ui";
+import { Button } from "theme-ui";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -16,10 +17,14 @@ const DELETE_MUTATION = gql`
 export default function DeleteNote(props) {
   const id = Number.parseInt(props.id);
   return (
-    <Mutation mutation={DELETE_MUTATION} variables={{ id }}>
-      {(deleteMutation) => (
-        <Button onClick={deleteMutation}>Delete Note</Button>
-      )}
-    </Mutation>
+    <div>
+      <Mutation mutation={DELETE_MUTATION} variables={{ id }}>
+        {(deleteMutation) => (
+          <Button m={2} onClick={deleteMutation} variant="danger">
+            Delete Note
+          </Button>
+        )}
+      </Mutation>
+    </div>
   );
 }

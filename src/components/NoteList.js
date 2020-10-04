@@ -1,8 +1,9 @@
-import React from "react";
+/** @jsx jsx */
+import { jsx } from "theme-ui";
 import Note from "./Note";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { Flex, Container, Button } from "theme-ui";
+import { Container, Button } from "theme-ui";
 import CreateNote from "./CreateNote";
 import { AUTH_TOKEN } from "../constants";
 
@@ -19,7 +20,7 @@ const NOTELIST_QUERY = gql`
 function NoteList(props) {
   return (
     <div>
-      <Container sx={{ textAlign: "center" }}>
+      <div sx={{ textAlign: "right" }}>
         <Button
           variant="primary"
           onClick={() => {
@@ -29,7 +30,12 @@ function NoteList(props) {
         >
           Sign Out
         </Button>
-        <Flex sx={{ justifyContent: "center" }} mb={2}>
+      </div>
+      <h1 sx={{ textAlign: "center" }}>Welcome, {props.userName}!</h1>
+      <Container sx={{ width: "75%", margin: "auto" }}>
+        <div
+          sx={{ textAlign: "center", justifyContent: "center", margin: "5%" }}
+        >
           <Query query={NOTELIST_QUERY}>
             {({ loading, error, data }) => {
               if (loading) return <div>Fetching</div>;
@@ -45,8 +51,10 @@ function NoteList(props) {
               );
             }}
           </Query>
-        </Flex>
-        <CreateNote />
+        </div>
+        <div sx={{ textAlign: "center" }}>
+          <CreateNote />
+        </div>
       </Container>
     </div>
   );
