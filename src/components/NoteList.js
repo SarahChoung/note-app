@@ -7,6 +7,16 @@ import { Container, Button } from "theme-ui";
 import CreateNote from "./CreateNote";
 import { AUTH_TOKEN } from "../constants";
 
+const NEW_NOTES_SUBSCRIPTION = gql`
+  subscription {
+    newNote {
+      id
+      title
+      description
+    }
+  }
+`;
+
 const NOTELIST_QUERY = gql`
   {
     noteList {
@@ -18,6 +28,32 @@ const NOTELIST_QUERY = gql`
 `;
 
 function NoteList(props) {
+  const _subscribeToNewNotes = (subscribeToMore) => {
+    subscribeToMore({
+      document: NEW_NOTES_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const newNote = subscriptionData.data.newNote;
+
+        const exists = prev.noteList.find(({ id }) => id === newNote.id);
+        if (exists) return prev;
+
+        console.log(prev);
+        console.log(
+          Object.assign({}, prev, {
+            noteList: [...prev.noteList, newNote],
+            __typename: prev.noteList.__typename,
+          })
+        );
+
+        return Object.assign({}, prev, {
+          noteList: [...prev.noteList, newNote],
+          __typename: prev.noteList.__typename,
+        });
+      },
+    });
+  };
+
   return (
     <div>
       <div sx={{ textAlign: "right" }}>
@@ -37,9 +73,11 @@ function NoteList(props) {
           sx={{ textAlign: "center", justifyContent: "center", margin: "5%" }}
         >
           <Query query={NOTELIST_QUERY}>
-            {({ loading, error, data }) => {
+            {({ loading, error, data, subscribeToMore }) => {
               if (loading) return <div>Fetching</div>;
               if (error) return <div>Error</div>;
+
+              _subscribeToNewNotes(subscribeToMore);
 
               const notesToRender = data.noteList;
               return (
