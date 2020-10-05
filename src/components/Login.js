@@ -55,7 +55,7 @@ export default function Login(props) {
       }}
     >
       <div>
-        <h1 sx={{ color: "primary", textAlign: "center" }}>Fart Notes</h1>
+        <h1 sx={{ color: "primary", textAlign: "center" }}>Note App</h1>
         <h3 sx={{ textAlign: "center" }}>{login ? "Login" : "Sign Up"}</h3>
         <Box
           as="form"

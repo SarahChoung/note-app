@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { Container, Button } from "theme-ui";
 import CreateNote from "./CreateNote";
-import { AUTH_TOKEN } from "../constants";
+import { AUTH_TOKEN, USER_NAME } from "../constants";
 
 const NEW_NOTES_SUBSCRIPTION = gql`
   subscription {
@@ -27,7 +27,7 @@ const DELETE_NOTE_SUBSCRIPTION = gql`
   }
 `;
 
-const NOTELIST_QUERY = gql`
+export const NOTELIST_QUERY = gql`
   {
     noteList {
       id
@@ -73,12 +73,10 @@ function NoteList(props) {
         console.log(
           Object.assign({}, prev, {
             noteList: updatedList,
-            __typename: deletedNote.__typename,
           })
         );
         return Object.assign({}, prev, {
           noteList: updatedList,
-          __typename: deletedNote.__typename,
         });
       },
     });
@@ -91,7 +89,8 @@ function NoteList(props) {
           variant="primary"
           onClick={() => {
             props.handleViewChange("login");
-            localStorage.setItem(AUTH_TOKEN, null);
+            localStorage.removeItem(AUTH_TOKEN);
+            localStorage.removeItem(USER_NAME);
           }}
         >
           Sign Out
@@ -107,8 +106,8 @@ function NoteList(props) {
               if (loading) return <div>Fetching</div>;
               if (error) return <div>Error</div>;
 
-              _subscribeToDeleteNote(subscribeToMore);
               _subscribeToNewNotes(subscribeToMore);
+              _subscribeToDeleteNote(subscribeToMore);
 
               const notesToRender = data.noteList;
               return (

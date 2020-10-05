@@ -30,7 +30,7 @@ async function updateNote(parent, args, context, info) {
 }
 
 async function deleteNote(parent, args, context, info) {
-  let deleteNote = context.prisma.note
+  const deleteNote = context.prisma.note
     .delete({
       where: { id: args.id },
     })
