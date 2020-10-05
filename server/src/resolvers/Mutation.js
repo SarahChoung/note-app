@@ -30,11 +30,14 @@ async function updateNote(parent, args, context, info) {
 }
 
 async function deleteNote(parent, args, context, info) {
-  return context.prisma.note
+  let deleteNote = context.prisma.note
     .delete({
       where: { id: args.id },
     })
     .catch((err) => console.error(err));
+
+  context.pubsub.publish("DELETE_NOTE", deleteNote);
+  return deleteNote;
 }
 
 async function signup(parent, args, context, info) {

@@ -9,6 +9,18 @@ const newNote = {
   },
 };
 
+function deleteNoteSubscribe(parent, args, context, info) {
+  return context.pubsub.asyncIterator("DELETE_NOTE");
+}
+
+const deleteNote = {
+  subscribe: deleteNoteSubscribe,
+  resolve: (payload) => {
+    return payload;
+  },
+};
+
 module.exports = {
   newNote,
+  deleteNote,
 };

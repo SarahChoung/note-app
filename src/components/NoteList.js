@@ -17,6 +17,16 @@ const NEW_NOTES_SUBSCRIPTION = gql`
   }
 `;
 
+const DELETE_NOTE_SUBSCRIPTION = gql`
+  subscription {
+    deleteNote {
+      id
+      title
+      description
+    }
+  }
+`;
+
 const NOTELIST_QUERY = gql`
   {
     noteList {
@@ -38,24 +48,44 @@ function NoteList(props) {
         const exists = prev.noteList.find(({ id }) => id === newNote.id);
         if (exists) return prev;
 
-        console.log(prev);
-        console.log(
-          Object.assign({}, prev, {
-            noteList: [...prev.noteList, newNote],
-            __typename: prev.noteList.__typename,
-          })
-        );
-
         return Object.assign({}, prev, {
           noteList: [...prev.noteList, newNote],
-          __typename: prev.noteList.__typename,
+          __typename: newNote.__typename,
+        });
+      },
+    });
+  };
+
+  const _subscribeToDeleteNote = (subscribeToMore) => {
+    subscribeToMore({
+      document: DELETE_NOTE_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+
+        const deletedNote = subscriptionData.data.deleteNote;
+
+        let deleteIndex = prev.noteList.indexOf(
+          prev.noteList.find((element) => element.id === deletedNote.id)
+        );
+        let updatedList = prev.noteList;
+        updatedList.splice(deleteIndex, 1);
+
+        console.log(
+          Object.assign({}, prev, {
+            noteList: updatedList,
+            __typename: deletedNote.__typename,
+          })
+        );
+        return Object.assign({}, prev, {
+          noteList: updatedList,
+          __typename: deletedNote.__typename,
         });
       },
     });
   };
 
   return (
-    <div>
+    <div sx={{ marginBottom: "50px" }}>
       <div sx={{ textAlign: "right" }}>
         <Button
           variant="primary"
@@ -77,14 +107,19 @@ function NoteList(props) {
               if (loading) return <div>Fetching</div>;
               if (error) return <div>Error</div>;
 
+              _subscribeToDeleteNote(subscribeToMore);
               _subscribeToNewNotes(subscribeToMore);
 
               const notesToRender = data.noteList;
               return (
                 <div>
-                  {notesToRender.map((note) => (
-                    <Note key={note.id} note={note} />
-                  ))}
+                  {notesToRender.length > 0 ? (
+                    notesToRender.map((note) => (
+                      <Note key={note.id} note={note} />
+                    ))
+                  ) : (
+                    <div>There are no notes</div>
+                  )}
                 </div>
               );
             }}
