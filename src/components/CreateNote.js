@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Label, Input, Box } from "theme-ui";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-// import { NOTELIST_QUERY } from "./NoteList";
+import { NOTELIST_QUERY } from "./NoteList";
 
 const POST_MUTATION = gql`
   mutation PostMutation($description: String!, $title: String!) {
@@ -48,14 +48,15 @@ export default function CreateNote(props) {
             <Mutation
               mutation={POST_MUTATION}
               variables={{ title, description }}
-              // update={(store, { data: { postNote } }) => {
-              //   const data = store.readQuery({ query: NOTELIST_QUERY });
-              //   data.noteList.push(postNote);
-              //   store.writeQuery({
-              //     query: NOTELIST_QUERY,
-              //     data,
-              //   });
-              // }}
+              update={(store, { data: { postNote } }) => {
+                const data = store.readQuery({ query: NOTELIST_QUERY });
+                data.noteList.push(postNote);
+                store.writeQuery({
+                  query: NOTELIST_QUERY,
+                  data,
+                });
+                props.updateNotes(data);
+              }}
             >
               {(postMutation) => (
                 <Button onClick={postMutation}>Submit New Note</Button>
