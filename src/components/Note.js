@@ -12,7 +12,11 @@ export default function Note(props) {
       </div>
       <Grid gap={2} columns={[2]}>
         <UpdateNote note={props.note} />
-        <DeleteNote id={props.note.id} updateNotes={props.updateNotes} />
+        <DeleteNote
+          id={props.note.id}
+          updateNotes={props.updateNotes}
+          notes={props.notes}
+        />
       </Grid>
     </Box>
   );

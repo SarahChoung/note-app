@@ -7,24 +7,7 @@ import gql from "graphql-tag";
 import { Container, Button } from "theme-ui";
 import CreateNote from "./CreateNote";
 import { AUTH_TOKEN, USER_NAME } from "../constants";
-// const NEW_NOTES_SUBSCRIPTION = gql`
-//   subscription {
-//     newNote {
-//       id
-//       title
-//       description
-//     }
-//   }
-// `;
-// const DELETE_NOTE_SUBSCRIPTION = gql`
-//   subscription {
-//     deleteNote {
-//       id
-//       title
-//       description
-//     }
-//   }
-// `;
+
 export const NOTELIST_QUERY = gql`
   {
     noteList {
@@ -36,70 +19,25 @@ export const NOTELIST_QUERY = gql`
 `;
 function NoteList(props) {
   const [notes, setNotes] = useState([]);
-  const { data, loading, error, subscribeToMore, refetch } = useQuery(
-    NOTELIST_QUERY,
-    {
-      // pollInterval: 500,
-      onCompleted: (data) => setNotes(data.noteList),
-    }
-  );
+  const { data, loading, error, refetch } = useQuery(NOTELIST_QUERY, {
+    onCompleted: (data) => setNotes(data.noteList),
+  });
 
   function updateNotes(newValue) {
     setNotes(newValue);
   }
 
-  // const _subscribeToNewNotes = (subscribeToMore) => {
-  //   subscribeToMore({
-  //     document: NEW_NOTES_SUBSCRIPTION,
-  //     updateQuery: (prev, { subscriptionData }) => {
-  //       if (!subscriptionData.data) return prev;
-  //       const newNote = subscriptionData.data.newNote;
-  //       const exists = prev.noteList.find(({ id }) => id === newNote.id);
-  //       if (exists) return prev;
-  //       setNotes([...prev.noteList, newNote]);
-  //       return Object.assign({}, prev, {
-  //         noteList: [...prev.noteList, newNote],
-  //         __typename: newNote.__typename,
-  //       });
-  //     },
-  //   });
-  // };
-
   useEffect(() => {
-    // const _subscribeToDeleteNote = (subscribeToMore) => {
-    //   subscribeToMore({
-    //     document: DELETE_NOTE_SUBSCRIPTION,
-    //     updateQuery: (prev, { subscriptionData }) => {
-    //       if (!subscriptionData.data) return prev;
-    //       const deletedNote = subscriptionData.data.deleteNote;
-    //       const deleteIndex = notes.indexOf(
-    //         notes.find((element) => element.id === deletedNote.id)
-    //       );
-    //       let updatedList = notes;
-    //       updatedList.splice(deleteIndex, 1);
-    //       console.log("SPLICE", updatedList);
-    //       setNotes(updatedList);
-    //       console.log(
-    //         Object.assign({}, prev, {
-    //           noteList: updatedList,
-    //         })
-    //       );
-    //       return Object.assign({}, prev, {
-    //         noteList: updatedList,
-    //       });
-    //     },
-    //   });
-    // };
-    // _subscribeToNewNotes(subscribeToMore);
-    // _subscribeToDeleteNote(subscribeToMore);
     refetch();
     if (data) {
       setNotes(data.noteList);
     }
+
     return () => {
       setNotes([]);
     };
   }, [data, notes, refetch]);
+
   return (
     <div sx={{ marginBottom: "50px" }}>
       <div sx={{ textAlign: "right" }}>
@@ -127,7 +65,12 @@ function NoteList(props) {
             <div>
               {notes.length > 0 ? (
                 notes.map((note) => (
-                  <Note key={note.id} note={note} updateNotes={updateNotes} />
+                  <Note
+                    key={note.id}
+                    note={note}
+                    delete
+                    updateNotes={updateNotes}
+                  />
                 ))
               ) : (
                 <div>There are no notes</div>

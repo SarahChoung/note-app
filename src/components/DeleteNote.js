@@ -22,23 +22,7 @@ export default function DeleteNote(props) {
       <Mutation
         mutation={DELETE_MUTATION}
         variables={{ id }}
-        update={(store, { data: { deleteNote } }) => {
-          const data = store.readQuery({ query: NOTELIST_QUERY });
-          const newData = data;
-          console.log("old", newData.noteList);
-
-          const deleteIndex = newData.noteList.indexOf(
-            newData.noteList.find((element) => element.id === deleteNote.id)
-          );
-          console.log(deleteIndex);
-          newData.noteList.splice(deleteIndex, 1);
-          store.writeQuery({
-            query: NOTELIST_QUERY,
-            data: newData,
-          });
-          console.log("new", newData.noteList);
-          props.updateNotes(newData.noteList);
-        }}
+        onCompleted={(data) => props.updateNotes(data.deleteNote)}
       >
         {(deleteMutation) => (
           <Button m={2} onClick={deleteMutation} variant="danger">
