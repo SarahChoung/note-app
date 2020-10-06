@@ -3,7 +3,6 @@ import { jsx } from "theme-ui";
 import { Button } from "theme-ui";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import { NOTELIST_QUERY } from "./NoteList";
 
 const DELETE_MUTATION = gql`
   mutation DeleteMutation($id: Int!) {
@@ -22,7 +21,11 @@ export default function DeleteNote(props) {
       <Mutation
         mutation={DELETE_MUTATION}
         variables={{ id }}
-        onCompleted={(data) => props.updateNotes(data.deleteNote)}
+        onCompleted={(data) => {
+          props.updateNotes(
+            props.notes.filter((item) => item.id !== data.deleteNote.id)
+          );
+        }}
       >
         {(deleteMutation) => (
           <Button m={2} onClick={deleteMutation} variant="danger">

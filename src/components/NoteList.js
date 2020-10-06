@@ -23,9 +23,9 @@ function NoteList(props) {
     onCompleted: (data) => setNotes(data.noteList),
   });
 
-  function updateNotes(newValue) {
+  const updateNotes = (newValue) => {
     setNotes(newValue);
-  }
+  };
 
   useEffect(() => {
     refetch();
@@ -89,6 +89,7 @@ function NoteList(props) {
                     note={note}
                     delete
                     updateNotes={updateNotes}
+                    notes={notes}
                   />
                 ))
               ) : (
@@ -112,7 +113,7 @@ function NoteList(props) {
           )}
         </div>
         <div sx={{ textAlign: "center", paddingBottom: "20px" }}>
-          <CreateNote updateNotes={updateNotes} />
+          <CreateNote updateNotes={updateNotes} notes={notes} />
         </div>
       </Container>
     </div>

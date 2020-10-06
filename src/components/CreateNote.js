@@ -51,14 +51,8 @@ export default function CreateNote(props) {
             <Mutation
               mutation={POST_MUTATION}
               variables={{ title, description }}
-              update={(store, { data: { postNote } }) => {
-                const data = store.readQuery({ query: NOTELIST_QUERY });
-                data.noteList.push(postNote);
-                store.writeQuery({
-                  query: NOTELIST_QUERY,
-                  data,
-                });
-                props.updateNotes(data);
+              onCompleted={(data) => {
+                props.updateNotes(props.notes.push(data.postNote));
               }}
             >
               {(postMutation) => (
