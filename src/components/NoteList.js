@@ -39,23 +39,42 @@ function NoteList(props) {
   }, [data, notes, refetch]);
 
   return (
-    <div sx={{ marginBottom: "50px" }}>
-      <div sx={{ textAlign: "right" }}>
-        <Button
-          variant="primary"
-          onClick={() => {
-            props.handleViewChange("login");
-            localStorage.removeItem(AUTH_TOKEN);
-            localStorage.removeItem(USER_NAME);
-          }}
-        >
-          Sign Out
-        </Button>
+    <div sx={{ height: "97vh" }}>
+      <div
+        sx={{
+          textAlign: "right",
+          backgroundColor: "accent",
+          padding: "5px 5%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div sx={{ fontWeight: "bold", fontSize: "1.25rem", color: "neutral" }}>
+          Note App
+        </div>
+        <div>
+          <Button
+            variant="signout"
+            onClick={() => {
+              props.handleViewChange("login");
+              localStorage.removeItem(AUTH_TOKEN);
+              localStorage.removeItem(USER_NAME);
+            }}
+          >
+            Sign Out
+          </Button>
+        </div>
       </div>
-      <h1 sx={{ textAlign: "center" }}>Welcome, {props.userName}!</h1>
+      <div sx={{ paddingTop: "1.5%" }}>
+        <h1 sx={{ textAlign: "center" }}>
+          Welcome,{" "}
+          <span sx={{ textDecoration: "underline" }}>{props.userName}</span>!
+        </h1>
+      </div>
       <Container sx={{ width: "75%", margin: "auto" }}>
         <div
-          sx={{ textAlign: "center", justifyContent: "center", margin: "5%" }}
+          sx={{ textAlign: "center", justifyContent: "center", margin: "3%" }}
         >
           {loading ? (
             <div>Fetching</div>
@@ -73,12 +92,26 @@ function NoteList(props) {
                   />
                 ))
               ) : (
-                <div>There are no notes</div>
+                <div
+                  sx={{
+                    borderRadius: "10px",
+                    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "10px auto",
+                    minHeight: "100px",
+                    backgroundColor: "neutral",
+                    width: "300px",
+                  }}
+                >
+                  You have no notes
+                </div>
               )}
             </div>
           )}
         </div>
-        <div sx={{ textAlign: "center" }}>
+        <div sx={{ textAlign: "center", paddingBottom: "20px" }}>
           <CreateNote updateNotes={updateNotes} />
         </div>
       </Container>

@@ -25,7 +25,7 @@ export default function UpdateNote(props) {
       <Button m={2} onClick={() => setIsUpdating(!isUpdating)}>
         {isUpdating ? "Cancel" : "Update Note"}
       </Button>
-      <Box m={"auto"} sx={{ width: "50%" }}>
+      <Box m={"auto"} pb={1} sx={{ width: "75%" }}>
         {isUpdating && (
           <div>
             <Label htmlFor="title">Title</Label>
@@ -52,6 +52,7 @@ export default function UpdateNote(props) {
             >
               {(updateMutation) => (
                 <Button
+                  variant="secondary"
                   onClick={() => {
                     updateMutation();
                     setIsUpdating(!isUpdating);

@@ -21,7 +21,10 @@ export default function CreateNote(props) {
 
   return (
     <div>
-      <Button onClick={() => setIsCreating(!isCreating)}>
+      <Button
+        onClick={() => setIsCreating(!isCreating)}
+        variant={isCreating ? "primary" : "secondary"}
+      >
         {isCreating ? "Cancel" : "Create New Note"}
       </Button>
       <Box m={"auto"} sx={{ width: "50%" }}>
@@ -59,7 +62,16 @@ export default function CreateNote(props) {
               }}
             >
               {(postMutation) => (
-                <Button onClick={postMutation}>Submit New Note</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    postMutation();
+                    setTitle("");
+                    setDescription("");
+                  }}
+                >
+                  Submit New Note
+                </Button>
               )}
             </Mutation>
           </div>

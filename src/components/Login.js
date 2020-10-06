@@ -52,11 +52,31 @@ export default function Login(props) {
       sx={{
         display: "flex",
         justifyContent: "center",
+        alignItems: "center",
+        height: "90vh",
+        backgroundColor: "e7d8c9",
       }}
     >
-      <div>
-        <h1 sx={{ color: "primary", textAlign: "center" }}>Note App</h1>
-        <h3 sx={{ textAlign: "center" }}>{login ? "Login" : "Sign Up"}</h3>
+      <div
+        sx={{
+          backgroundColor: "neutral",
+          padding: "20px",
+          borderRadius: "5px",
+          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+        }}
+      >
+        <h1
+          sx={{
+            color: "danger",
+            textAlign: "center",
+            dropShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+          }}
+        >
+          Note App
+        </h1>
+        <h2 sx={{ textAlign: "center", color: "carbon" }}>
+          {login ? "Login" : "Sign Up"}
+        </h2>
         <Box
           as="form"
           onSubmit={(e) => {
@@ -64,7 +84,6 @@ export default function Login(props) {
           }}
           sx={{
             fontSize: 4,
-            backgroundColor: "background",
             textAlign: "center",
           }}
         >
@@ -89,6 +108,10 @@ export default function Login(props) {
             id="email"
             placeholder="Your email"
             mb={3}
+            sx={{
+              boxShadow: "inset 2px 4px 4px rgba(0, 0, 0, 0.25)",
+              border: "1px solid rgba(0, 0, 0, 0.25)",
+            }}
           />
           <Label htmlFor="password">Password</Label>
           <Input
@@ -98,6 +121,10 @@ export default function Login(props) {
             id="password"
             placeholder="Your password"
             mb={3}
+            sx={{
+              boxShadow: "inset 2px 4px 4px rgba(0, 0, 0, 0.25)",
+              border: "1px solid rgba(0, 0, 0, 0.25)",
+            }}
           />
           <Button
             type="button"
