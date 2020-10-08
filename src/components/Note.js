@@ -29,7 +29,7 @@ export default function Note(props) {
           }}
         >
           <h2>{props.note.title}</h2>
-          <p>{props.note.description}</p>
+          <p sx={{padding: "2%"}}>{props.note.description}</p>
         </div>
         <Grid gap={2} columns={[2]}>
           <UpdateNote note={props.note} />

@@ -83,7 +83,7 @@ function NoteList(props) {
       <Container
         sx={{
           maxWidth: "800px",
-          margin: "auto",
+          margin: "0 auto 2%",
           backgroundColor: "darkerBase",
           paddingTop: "2%",
           borderRadius: "10px",
