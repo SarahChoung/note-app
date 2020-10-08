@@ -138,9 +138,13 @@ export default function Login(props) {
           <Mutation
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
             variables={{ email, password, name }}
+            onError={(err) => {
+              console.log(err);
+              alert(err);
+            }}
             onCompleted={(data, error) => {
               if (error) {
-                return <div>An Error</div>;
+                console.log(error);
               }
               if (data) {
                 _confirm(data);
