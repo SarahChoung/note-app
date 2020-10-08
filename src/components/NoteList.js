@@ -50,12 +50,13 @@ function NoteList(props) {
           alignItems: "center",
         }}
       >
-        <div sx={{ fontWeight: "bold", fontSize: "1.25rem", color: "neutral" }}>
-          Note App
+        <div sx={{ fontWeight: "bold", fontSize: "1.25rem", color: "white" }}>
+          No(te)vvum
         </div>
         <div>
           <Button
             variant="signout"
+            sx={{ color: "darkerAccent" }}
             onClick={() => {
               props.handleViewChange("login");
               localStorage.removeItem(AUTH_TOKEN);
@@ -71,8 +72,24 @@ function NoteList(props) {
           Welcome,{" "}
           <span sx={{ textDecoration: "underline" }}>{props.userName}</span>!
         </h1>
+        <p sx={{ textAlign: "center" }}>
+          You have{" "}
+          <span sx={{ color: "darkerAccent", fontWeight: "bold" }}>
+            {notes.length}
+          </span>
+          {notes.length === 1 ? " note" : " notes"}
+        </p>
       </div>
-      <Container sx={{ width: "75%", margin: "auto" }}>
+      <Container
+        sx={{
+          maxWidth: "800px",
+          margin: "auto",
+          backgroundColor: "darkerBase",
+          paddingTop: "2%",
+          borderRadius: "10px",
+          boxShadow: "inset 0px 4px 4px rgba(0, 0, 0, 0.25)",
+        }}
+      >
         <div
           sx={{ textAlign: "center", justifyContent: "center", margin: "3%" }}
         >

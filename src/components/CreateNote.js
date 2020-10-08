@@ -30,7 +30,9 @@ export default function CreateNote(props) {
       <Box m={"auto"} sx={{ width: "50%" }}>
         {isCreating && (
           <div>
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title" color="white">
+              Title
+            </Label>
             <Input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -38,8 +40,11 @@ export default function CreateNote(props) {
               id="Title"
               placeholder="Note Title"
               mb={3}
+              backgroundColor="white"
             />
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" color="white">
+              Description
+            </Label>
             <Input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -47,6 +52,7 @@ export default function CreateNote(props) {
               id="description"
               placeholder="Note Description"
               mb={3}
+              backgroundColor="white"
             />
             <Mutation
               mutation={POST_MUTATION}

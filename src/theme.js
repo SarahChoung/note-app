@@ -21,16 +21,16 @@ export default {
       bg: "base",
       transition: "0.3s",
       "&:hover": {
-        bg: "darkerBase",
+        bg: "lightgrey",
         cursor: " pointer",
       },
     },
     secondary: {
-      color: "text",
+      color: "white",
       bg: "accent",
       transition: "0.3s",
       "&:hover": {
-        bg: "darkerAccent",
+        bg: "#4fc3f7",
         cursor: "pointer",
       },
     },
@@ -39,7 +39,7 @@ export default {
       bg: "danger",
       transition: "0.3s",
       "&:hover": {
-        bg: "darkerDanger",
+        bg: "#FF0000",
         cursor: "pointer",
       },
     },
@@ -48,7 +48,7 @@ export default {
       bg: "neutral",
       transition: "0.3s",
       "&:hover": {
-        bg: "base",
+        bg: "white",
         cursor: "pointer",
       },
     },

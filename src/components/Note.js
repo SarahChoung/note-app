@@ -10,7 +10,7 @@ export default function Note(props) {
       p={2}
       bg="neutral"
       sx={{
-        maxWidth: "900px",
+        maxWidth: "600px",
         borderRadius: "10px",
         boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
         display: "flex",

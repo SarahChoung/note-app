@@ -34,6 +34,7 @@ export default function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const _confirm = async (data) => {
     const { token } = login ? data.login : data.signup;
@@ -72,11 +73,14 @@ export default function Login(props) {
             dropShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
           }}
         >
-          Note App
+          No(te)vvum
         </h1>
         <h2 sx={{ textAlign: "center", color: "carbon" }}>
           {login ? "Login" : "Sign Up"}
         </h2>
+        {errorMessage && (
+          <p sx={{ textAlign: "center", color: "danger" }}>* {errorMessage}</p>
+        )}
         <Box
           as="form"
           onSubmit={(e) => {
@@ -92,17 +96,23 @@ export default function Login(props) {
               <Label htmlFor="username">Username</Label>
               <Input
                 value={name}
+                required
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your name"
                 name="username"
                 id="username"
                 mb={3}
+                sx={{
+                  boxShadow: "inset 2px 4px 4px rgba(0, 0, 0, 0.25)",
+                  border: "1px solid rgba(0, 0, 0, 0.25)",
+                }}
               />
             </div>
           )}
           <Label htmlFor="email">Email</Label>
           <Input
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             name="email"
             id="email"
@@ -116,6 +126,7 @@ export default function Login(props) {
           <Label htmlFor="password">Password</Label>
           <Input
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             id="password"
@@ -139,12 +150,13 @@ export default function Login(props) {
             mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
             variables={{ email, password, name }}
             onError={(err) => {
-              console.log(err);
-              alert(err);
+              console.log(err.message);
+              let errMessage = err.message.replace("GraphQL error: ", "");
+              setErrorMessage(errMessage);
             }}
             onCompleted={(data, error) => {
               if (error) {
-                console.log(error);
+                alert(error);
               }
               if (data) {
                 _confirm(data);
